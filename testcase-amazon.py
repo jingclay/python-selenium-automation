@@ -13,5 +13,11 @@ driver.find_element(By.XPATH, "//a[@id='nav-orders']").click()
 driver.find_element(By.XPATH, "//h1[contains(text(),'Sign in')]")
 driver.find_element(By.XPATH, "//input[@id='ap_email']")
 
-driver.quit()
+expected_result = "Sign in"
+actual_result = driver.find_element(By.XPATH,  "//h1[contains(text(),'Sign in')]").text
+print(actual_result)
+assert expected_result == actual_result, f'Expected {expected_result} but got actual {actual_result}'
+
+
 print('test case passed')
+driver.quit()
