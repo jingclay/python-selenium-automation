@@ -1,4 +1,4 @@
-Feature: Amazon main page tests
+Feature: Amazon best seller tests
 
   Scenario: BestSellers page has 5 links
     Given Open amazon page
