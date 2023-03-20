@@ -1,14 +1,22 @@
 # Created by svetlanalevinsohn at 2/25/23
 Feature: Amazon Sign in tests
 
- Scenario: Sign in page can be opened from Sign In popup
-   Given Open Amazon page
-   When Click Sign In from popup
-   Then Verify Sign In page opens
 
- Scenario: Sign in popup is visible for a few seconds
-   Given Open Amazon page
-   Then Verify Sign in popup shown
-   When Wait for 5 sec
-   Then Verify Sign in popup shown
-   Then Verify Sign in popup disappears
+
+Scenario: Logged out user sees Sign in page when clicking Orders
+ Given Open Amazon page
+ When Click Amazon Orders link
+ Then Verify Sign In page opens
+
+
+Scenario: 'Your Shopping Cart is empty' shown if no product added
+ Given Open Amazon page
+ When Click on cart icon
+ Then Verify 'Your Shopping Cart is empty.' text present
+
+
+Scenario: 'Add a product to cart'
+ Given Open Amazon page
+ When Click on cart icon
+ Then Verify 'Your Shopping Cart is empty.' text present
+

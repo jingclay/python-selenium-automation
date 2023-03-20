@@ -1,15 +1,15 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
+from pages.base_page import Page
 
 
-# AMAZON_SEARCH_FIELD = (By.ID, 'twotabsearchtextbox')
-# SEARCH_ICON = (By.ID, 'nav-search-submit-button')
-HAM_MENU = (By.ID, 'nav-hamburger-menu')
-FOOTER_LINKS = (By.CSS_SELECTOR, "table.navFooterMoreOnAmazon td.navFooterDescItem")
-HEADER_LINKS = (By.CSS_SELECTOR, "#nav-xshop a.nav-a[data-csa-c-type='link']")
-SIGN_IN_BTN = (By.CSS_SELECTOR, '#nav-signin-tooltip a.nav-action-button')
+class SearchResultsPage(Page):
+
+    SEARCH_RESULTS = (By.CSS_SELECTOR, "[data-component-type='s-search-result']")
+
+    def verify_search_result(self,expected_text):
+        self.verify_text(expected_text, *self.SEARCH_RESULTS)
 
 
 @given('Open Amazon page')
@@ -43,6 +43,21 @@ def click_signin(context):
 @when('Wait for {sec} sec')
 def wait_for_sec(context, sec):
     sleep(int(sec))
+
+
+@when('Click Amazon Orders link')
+def click_orders(context):
+    context.app.header.click_orders()
+
+
+@when ('Click on cart icon')
+def click_cart_icon(context):
+    context.app.header.click_cart_icon()
+
+
+@then("Verify 'Your Shopping Cart is empty.' text present")
+def shopping_cart_empty(context):
+    context.app.header.shopping_cart_empty()
 
 
 @then('Verify Sign in popup shown')
