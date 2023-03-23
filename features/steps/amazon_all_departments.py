@@ -2,18 +2,25 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
-
-
-HAM_MENU = (By.ID, 'nav-hamburger-menu')
-FOOTER_LINKS = (By.CSS_SELECTOR, "table.navFooterMoreOnAmazon td.navFooterDescItem")
-HEADER_LINKS = (By.CSS_SELECTOR, "#nav-xshop a.nav-a[data-csa-c-type='link']")
-SIGN_IN_BTN = (By.CSS_SELECTOR, '#nav-signin-tooltip a.nav-action-button')
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 
 @given('Open Amazon page')
 def open_amazon(context):
     # context.driver.get('https://www.amazon.com/')
     context.app.main_page.open_main_url()
+
+
+@when('hover over the "All Departments" dropdown menu')
+def all_departments(context):
+    context.app.header.all_departments()
+
+
+@when('Select department {department}')
+def select_department(context, department):
+    context.app.header.select_department(department)
 
 
 @when('Input text {text}')
@@ -28,14 +35,20 @@ def click_search(context):
     context.app.header.click_search()
 
 
-@when('Click Sign In from popup')
-def click_signin(context):
-    context.driver.wait.until(EC.element_to_be_clickable(SIGN_IN_BTN)).click()
-    # Feel free to add error message if needed too, for example:
-    context.driver.wait.until(
-        EC.element_to_be_clickable(SIGN_IN_BTN),
-        message='Sign in btn not clickable'
-    ).click()
+@then('verify search results are displayed')
+def search_results_exist(context):
+    context.app.header.search_results_exist()
+
+
+
+
+
+
+
+
+
+
+
 
 
 @when('Wait for {sec} sec')
@@ -48,14 +61,10 @@ def click_orders(context):
     context.app.header.click_orders()
 
 
-@when('Hover over language options')
-def hover_lang_options(context):
-    context.app.header.hover_lang_options()
 
 
-@when('Select department by alias {alias}')
-def select_department(context, alias):
-    context.app.header.select_department(alias)
+
+
 
 
 @then('Verify Sign in popup shown')
